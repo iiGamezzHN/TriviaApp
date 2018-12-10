@@ -30,7 +30,7 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
     }
 
     public void getQuestion(Callback activity) {
-        String url = "https://opentdb.com/api.php?amount=10";
+        String url = "https://opentdb.com/api.php?amount=10&type=boolean";
         RequestQueue queue = Volley.newRequestQueue(context);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, this, this);
@@ -56,7 +56,6 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
             for (int i = 0; i < questions.length(); i++) {
                 JSONObject questionObject = questions.getJSONObject(i);
 
-
                 String category = questionObject.getString("category");
                 String type = questionObject.getString("type");
                 String difficulty = questionObject.getString("difficulty");
@@ -66,12 +65,10 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
                 String space = " ";
 
                 Log.d("categories15", category);
-                Log.d("categories15", type);
-                Log.d("categories15", difficulty);
-                Log.d("categories15", question);
-                Log.d("categories15", correct);
-                Log.d("categories15", incorrect);
-                Log.d("categories15", space);
+
+                Question questionClass = new Question(category, type, difficulty, question,
+                        correct, incorrect);
+                arrayList.add(questionClass);
             }
 
             activity.gotQuestion(arrayList);

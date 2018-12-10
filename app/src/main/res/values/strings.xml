@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TriviaApp</string>
+    <string name="start">Start!</string>
+    <string name="highscores">Highscores</string>
+    <string name="q_true">True</string>
+    <string name="q_false">False</string>
+</resources>

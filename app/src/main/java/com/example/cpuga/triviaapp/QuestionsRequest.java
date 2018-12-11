@@ -64,7 +64,8 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
                 String incorrect = questionObject.getString("incorrect_answers");
                 String space = " ";
 
-                Log.d("categories15", category);
+                Log.d("categories15", "cat "+category);
+                Log.d("categories15", "q "+question);
 
                 Question questionClass = new Question(category, type, difficulty, question,
                         correct, incorrect);

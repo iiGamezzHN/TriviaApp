@@ -1,8 +1,6 @@
 package com.example.cpuga.triviaapp;
 
 import android.util.Log;
-import android.widget.Toast;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,7 +19,7 @@ public class Trivia implements Serializable {
 
     public Integer nextQuestion() {
         if (allAnswered()) {
-            return 0;
+            return 9;
         } else {
             return nr_answered;
         }

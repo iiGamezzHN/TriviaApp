@@ -21,7 +21,7 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
     Callback activity;
 
     public interface Callback {
-        void gotQuestion(ArrayList<Question> menus);
+        void gotQuestion(ArrayList<Question> q);
         void gotQuestionError(String message);
     }
 

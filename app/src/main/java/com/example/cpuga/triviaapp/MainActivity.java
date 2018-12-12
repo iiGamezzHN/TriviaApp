@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener{
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +26,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         startActivity(intent);
     }
 
-    public void post(View view) {
-        String url = "http://ide50-davidarisz.cs50.io:8080/list";
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        PostRequest request = new PostRequest(Request.Method.POST, url, this, this);
-        queue.add(request);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(String response) {
-
+    public void toHighscores(View view) {
+        Intent intent = new Intent(getApplicationContext(), HighscoresActivity.class);
+        startActivity(intent);
     }
 }

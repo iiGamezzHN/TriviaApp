@@ -58,7 +58,9 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
     public void updateScore (View view, int nr) {
         if (highscores.getCorrect() + highscores.getIncorrect() == 10) {
             Log.d("answered", "10");
-            Intent intent = new Intent(this, Highscores.class);
+            Intent intent = new Intent(this, HighscoresActivity.class);
+            intent.putExtra("scoreTag", highscores.getHighscore());
+            startActivity(intent);
         } else {
             tvHighscore = findViewById(R.id.questionHighscore);
             String answer = questionsArray.get(nr).getCorrect();

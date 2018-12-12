@@ -17,14 +17,10 @@
         android:onClick="toQuestion"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/toHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="toHighscores"
         android:layout_margin="8dp"
         android:text="@string/highscores" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="post"/>
 </LinearLayout>

@@ -6,17 +6,38 @@ import java.io.Serializable;
 
 public class Highscores implements Serializable {
     private int score;
+    private int correct;
+    private int incorrect;
 
     public Highscores () {
         score = 0;
+        correct = 0;
+        incorrect = 0;
     }
 
-    public void updateScore (int i) {
-        if (i >= 9) {
-            Log.d("lala", "lala");
-        } else {
-            score += 1;
-        }
+    public void updateCorrect() {
+        correct += 1;
+    }
+
+    public int getCorrect() {
+        return correct;
+    }
+
+    public void updateIncorrect() {
+        incorrect += 1;
+    }
+
+    public int getIncorrect() {
+        return incorrect;
+    }
+
+    public void updateScore () {
+        score += 1;
+//        if (i >= 9) {
+//            Log.d("lala", "lala");
+//        } else {
+//            score += 1;
+//        }
 
     }
 

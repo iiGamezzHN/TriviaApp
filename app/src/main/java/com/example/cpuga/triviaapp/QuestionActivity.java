@@ -44,7 +44,6 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
         sizing = "1/"+String.valueOf(trivia.size);
         String count = sizing;
         questionsArray = questions;
-//        String test = questions.get(0).getCategory();
 
         questionCategory.setText(questionsArray.get(0).getCategory());
         String diff = "Difficulty: "+questionsArray.get(0).getDifficulty();
@@ -57,26 +56,35 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
     }
 
     public void updateScore (View view, int nr) {
-        tvHighscore = findViewById(R.id.questionHighscore);
-        String answer = questionsArray.get(nr).getCorrect();
+        if (highscores.getCorrect() + highscores.getIncorrect() == 10) {
+            Log.d("answered", "10");
+            Intent intent = new Intent(this, Highscores.class);
+        } else {
+            tvHighscore = findViewById(R.id.questionHighscore);
+            String answer = questionsArray.get(nr).getCorrect();
 
-        switch(view.getId()) {
-            case R.id.questionTrue:
-                if (answer.equals("True")) {
-                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                    highscores.updateScore(nr);
-                } else {
-                    Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.questionFalse:
-                if (answer.equals("False")) {
-                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                    highscores.updateScore(nr);
-                } else {
-                    Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
-                }
-                break;
+            switch (view.getId()) {
+                case R.id.questionTrue:
+                    if (answer.equals("True")) {
+                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                        highscores.updateScore();
+                        highscores.updateCorrect();
+                    } else {
+                        Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+                        highscores.updateIncorrect();
+                    }
+                    break;
+                case R.id.questionFalse:
+                    if (answer.equals("False")) {
+                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                        highscores.updateScore();
+                        highscores.updateCorrect();
+                    } else {
+                        Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+                        highscores.updateIncorrect();
+                    }
+                    break;
+            }
         }
 
         String highscore = "Your score is: " + highscores.getHighscore();
@@ -84,82 +92,25 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
     }
 
     public boolean nextQuestion(View view) {
-        if (trivia.nextQuestion() == 0) {
-            firstAnswer(view, trivia.nextQuestion());
-            return true;
-        }
         int nr = trivia.nextQuestion();
 
         Log.d("qnr", String.valueOf(nr));
 
         updateScore(view, nr);
-
-//        if (trivia.allAnswered()) {
-//            Toast.makeText(this, "All Answered", Toast.LENGTH_SHORT).show();
-//            String count = String.valueOf(trivia.nextQuestion()+1) + "/10";
-//            questionCounter.setText(count);
-//        }
+        trivia.updateAnswered(); // +1 to nr of answered questions, now 1 too high
+        nr = trivia.nextQuestion();
 
         questionCategory.setText(questionsArray.get(nr).getCategory());
-        String diff = "Difficulty: "+questionsArray.get(nr).getDifficulty();
+        String diff = "Difficulty: " + questionsArray.get(nr).getDifficulty();
         questionDifficulty.setText(diff);
         questionQuestion.setText(questionsArray.get(nr).getQuestion());
-        String count = String.valueOf(trivia.nextQuestion()+1) + "/10";
+        String count = String.valueOf(trivia.nextQuestion() + 1) + "/10";
         questionCounter.setText(count);
         answer.setText(questionsArray.get(nr).getCorrect());
-        trivia.updateAnswered(); // +1 to nr of answered questions, now 1 too high
         return true;
     }
 
-    public void firstAnswer(View view, int nr) {
-        updateScore(view, trivia.nextQuestion());
-        trivia.updateAnswered(); // updates nr of answered q, but breaks nextQ
-
-        int new_nr = trivia.nextQuestion();
-        Log.d("qnr", String.valueOf(new_nr));
-
-        questionCategory.setText(questionsArray.get(new_nr).getCategory());
-        String diff = "Difficulty: "+questionsArray.get(new_nr).getDifficulty();
-
-        questionDifficulty.setText(diff);
-
-        questionQuestion.setText(questionsArray.get(new_nr).getQuestion());
-
-        String count = String.valueOf(trivia.nextQuestion()+1) + "/10";
-        questionCounter.setText(count);
-
-        answer.setText(questionsArray.get(new_nr).getCorrect());
-    }
-
     public void gotQuestionError(String message) {
-        int nr = trivia.nextQuestion();
-        String answer = questionsArray.get(nr).getCorrect();
 
-        if (trivia.allAnswered()) {
-
-            Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
-            String count = String.valueOf(trivia.nextQuestion()+1) + sizing;
-            questionCounter.setText(count);
-        } else {
-
-            tvHighscore = findViewById(R.id.questionHighscore);
-            trivia.updateAnswered();
-
-            questionCategory.setText(questionsArray.get(nr).getCategory());
-            String diff = "Difficulty: " + questionsArray.get(nr).getDifficulty();
-            questionDifficulty.setText(diff);
-            questionQuestion.setText(questionsArray.get(nr).getQuestion());
-
-            String count = String.valueOf(trivia.nextQuestion() + 1) + sizing;
-            questionCounter.setText(count);
-
-            String highscore = "Your score is: " + highscores.getHighscore();
-            tvHighscore.setText(highscore);
-
-            if (trivia.nextQuestion() == 9) {
-                String highscore2 = "Your score is: " + highscores.getHighscore();
-                tvHighscore.setText(highscore2);
-            }
-        }
     }
 }

@@ -52,20 +52,33 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
 
         try {
             JSONArray questions = response.getJSONArray("results");
+            Log.d("arraylen", "");
+            Log.d("arraylen", "");
+            Log.d("arraylen", "");
+            Log.d("arraylen", String.valueOf(questions.length()));
 
             for (int i = 0; i < questions.length(); i++) {
+                Log.d("arraylen", String.valueOf(i));
                 JSONObject questionObject = questions.getJSONObject(i);
 
                 String category = questionObject.getString("category");
-                String type = questionObject.getString("type");
-                String difficulty = questionObject.getString("difficulty");
-                String question = questionObject.getString("question");
-                String correct = questionObject.getString("correct_answer");
-                String incorrect = questionObject.getString("incorrect_answers");
-                String space = " ";
+                Log.d("arraylen", category);
 
-                Log.d("categories15", "cat "+category);
-                Log.d("categories15", "q "+question);
+                String type = questionObject.getString("type");
+                Log.d("arraylen", type);
+
+                String difficulty = questionObject.getString("difficulty");
+                Log.d("arraylen", difficulty);
+
+                String question = questionObject.getString("question");
+                Log.d("arraylen", question);
+
+                String correct = questionObject.getString("correct_answer");
+                Log.d("arraylen", correct);
+
+                String incorrect = questionObject.getString("incorrect_answers");
+                Log.d("arraylen", incorrect);
+                Log.d("arraylen", "");
 
                 Question questionClass = new Question(category, type, difficulty, question,
                         correct, incorrect);

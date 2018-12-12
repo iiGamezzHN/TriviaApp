@@ -5,11 +5,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Trivia implements Serializable {
+    public int size;
     private int nr_answered = 0;
     private ArrayList qArray;
 
     public Trivia (ArrayList arrayList) {
         qArray = arrayList;
+        size = qArray.size();
     }
 
     public boolean allAnswered() {

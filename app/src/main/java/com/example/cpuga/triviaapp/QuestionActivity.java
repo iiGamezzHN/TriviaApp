@@ -49,7 +49,7 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
         String diff = "Difficulty: "+questionsArray.get(0).getDifficulty();
         questionDifficulty.setText(diff);
         questionQuestion.setText(questionsArray.get(0).getQuestion());
-        answer.setText(questionsArray.get(0).getCorrect());
+//        answer.setText(questionsArray.get(0).getCorrect());
 
         questionCounter.setText(count);
 
@@ -108,7 +108,7 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
         questionQuestion.setText(questionsArray.get(nr).getQuestion());
         String count = String.valueOf(trivia.nextQuestion() + 1) + "/10";
         questionCounter.setText(count);
-        answer.setText(questionsArray.get(nr).getCorrect());
+//        answer.setText(questionsArray.get(nr).getCorrect());
         return true;
     }
 

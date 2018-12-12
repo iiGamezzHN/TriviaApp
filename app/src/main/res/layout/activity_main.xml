@@ -12,15 +12,17 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
+        android:onClick="toQuestion"
         android:text="@string/start"
-        android:onClick="toQuestion"/>
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/toHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:onClick="toHighscores"
-        android:layout_margin="8dp"
-        android:text="@string/highscores" />
+        android:text="@string/highscores"
+        android:textSize="24sp" />
 </LinearLayout>

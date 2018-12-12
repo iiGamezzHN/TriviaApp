@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/questionCategory"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="8dp"
         android:text=""
         android:textSize="24sp" />
@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/questionQuestion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_margin="8dp"
         android:text=""
         android:textSize="18sp" />
@@ -42,16 +42,18 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:onClick="nextQuestion"
-            android:text="@string/q_true" />
+            android:text="@string/q_true"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/questionFalse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:onClick="nextQuestion"
             android:layout_weight="1"
-            android:text="@string/q_false" />
+            android:onClick="nextQuestion"
+            android:text="@string/q_false"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

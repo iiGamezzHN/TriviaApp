@@ -6,6 +6,20 @@
     android:orientation="vertical"
     tools:context=".HighscoresActivity">
 
+    <TextView
+        android:id="@+id/highscore_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/leaderboards"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#c0c0c0"/>
+
     <ListView
         android:id="@+id/highscore_list"
         android:layout_width="match_parent"

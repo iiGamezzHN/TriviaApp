@@ -3,14 +3,22 @@ package com.example.cpuga.triviaapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 
-public class QuestionActivity extends AppCompatActivity implements QuestionsRequest.Callback {
+public class QuestionActivity extends AppCompatActivity implements Response.Listener<String>,
+        Response.ErrorListener, QuestionsRequest.Callback {
     TextView questionCategory;
     TextView questionDifficulty;
     TextView questionQuestion;
@@ -21,6 +29,8 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
     Highscores highscores;
     ArrayList<Question> questionsArray;
     String sizing;
+    int score;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,49 +58,50 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
         questionCategory.setText(questionsArray.get(0).getCategory());
         String diff = "Difficulty: "+questionsArray.get(0).getDifficulty();
         questionDifficulty.setText(diff);
-        questionQuestion.setText(questionsArray.get(0).getQuestion());
-//        answer.setText(questionsArray.get(0).getCorrect());
+        questionQuestion.setText(Html.fromHtml(questionsArray.get(0).getQuestion(), Html.FROM_HTML_MODE_COMPACT));
+        answer.setText(questionsArray.get(0).getCorrect());
 
         questionCounter.setText(count);
 
     }
 
     public void updateScore (View view, int nr) {
-        if (highscores.getCorrect() + highscores.getIncorrect() == 10) {
-            Log.d("answered", "10");
-            Intent intent = new Intent(this, HighscoresActivity.class);
-            intent.putExtra("scoreTag", highscores.getHighscore());
-            startActivity(intent);
-        } else {
-            tvHighscore = findViewById(R.id.questionHighscore);
-            String answer = questionsArray.get(nr).getCorrect();
+        tvHighscore = findViewById(R.id.questionHighscore);
+        String answer = questionsArray.get(nr).getCorrect();
 
-            switch (view.getId()) {
-                case R.id.questionTrue:
-                    if (answer.equals("True")) {
-                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                        highscores.updateScore();
-                        highscores.updateCorrect();
-                    } else {
-                        Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
-                        highscores.updateIncorrect();
-                    }
-                    break;
-                case R.id.questionFalse:
-                    if (answer.equals("False")) {
-                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-                        highscores.updateScore();
-                        highscores.updateCorrect();
-                    } else {
-                        Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
-                        highscores.updateIncorrect();
-                    }
-                    break;
-            }
+        switch (view.getId()) {
+            case R.id.questionTrue:
+                if (answer.equals("True")) {
+                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                    highscores.updateScore();
+                    highscores.updateCorrect();
+                } else {
+                    Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+                    highscores.updateIncorrect();
+                }
+                break;
+            case R.id.questionFalse:
+                if (answer.equals("False")) {
+                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                    highscores.updateScore();
+                    highscores.updateCorrect();
+                } else {
+                    Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+                    highscores.updateIncorrect();
+                }
+                break;
         }
 
         String highscore = "Your score is: " + highscores.getHighscore();
         tvHighscore.setText(highscore);
+
+        if (highscores.getCorrect() + highscores.getIncorrect() == 10) {
+            Log.d("answered", "10");
+            score = highscores.getHighscore();
+            String winMessage = "You scored " + score + " points!";
+            Toast.makeText(this, winMessage, Toast.LENGTH_SHORT).show();
+            post();
+        }
     }
 
     public boolean nextQuestion(View view) {
@@ -105,14 +116,33 @@ public class QuestionActivity extends AppCompatActivity implements QuestionsRequ
         questionCategory.setText(questionsArray.get(nr).getCategory());
         String diff = "Difficulty: " + questionsArray.get(nr).getDifficulty();
         questionDifficulty.setText(diff);
-        questionQuestion.setText(questionsArray.get(nr).getQuestion());
+        questionQuestion.setText(Html.fromHtml(questionsArray.get(nr).getQuestion(), Html.FROM_HTML_MODE_COMPACT));
         String count = String.valueOf(trivia.nextQuestion() + 1) + "/10";
         questionCounter.setText(count);
-//        answer.setText(questionsArray.get(nr).getCorrect());
+        answer.setText(questionsArray.get(nr).getCorrect());
         return true;
     }
 
     public void gotQuestionError(String message) {
+
+    }
+
+    public void post() {
+        String url = "http://ide50-davidarisz.cs50.io:8080/list";
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        PostRequest request = new PostRequest(Request.Method.POST, url, this, this, score);
+        queue.add(request);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(String response) {
 
     }
 }

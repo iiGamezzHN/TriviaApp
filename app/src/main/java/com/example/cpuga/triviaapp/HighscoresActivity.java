@@ -15,22 +15,13 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 
-public class HighscoresActivity extends AppCompatActivity implements Response.Listener<String>,
-        Response.ErrorListener, HighscoreRequest.Callback {
+public class HighscoresActivity extends AppCompatActivity implements HighscoreRequest.Callback {
     private int highscore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_highscores);
-
-        if (getIntent().getSerializableExtra("scoreTag") == null) {
-
-        } else {
-            highscore = (int) getIntent().getSerializableExtra("scoreTag");
-            post();
-        }
-
 
         HighscoreRequest highscoreRequest = new HighscoreRequest(this);
         highscoreRequest.getHighscore(this);
@@ -42,22 +33,5 @@ public class HighscoresActivity extends AppCompatActivity implements Response.Li
                 android.R.id.text1, arrayList);
         ListView listView = findViewById(R.id.highscore_list);
         listView.setAdapter(adapter);
-    }
-
-    public void post() {
-        String url = "http://ide50-davidarisz.cs50.io:8080/list";
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        PostRequest request = new PostRequest(Request.Method.POST, url, this, this, highscore);
-        queue.add(request);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(String response) {
-
     }
 }

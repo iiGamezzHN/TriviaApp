@@ -57,7 +57,7 @@ public class QuestionsRequest implements Response.Listener<JSONObject>, Response
             Log.d("arraylen", "");
             Log.d("arraylen", String.valueOf(questions.length()));
 
-            for (int i = 0; i < questions.length(); i++) {
+            for (int i = 0; i < questions.length(); i++) { // Loop through questions
                 Log.d("arraylen", String.valueOf(i));
                 JSONObject questionObject = questions.getJSONObject(i);
 

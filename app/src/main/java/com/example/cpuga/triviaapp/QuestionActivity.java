@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity implements Response.Listener<String>,
         Response.ErrorListener, QuestionsRequest.Callback {
+    // Initialize variables
     TextView questionCategory;
     TextView questionDifficulty;
     TextView questionQuestion;
@@ -37,18 +38,18 @@ public class QuestionActivity extends AppCompatActivity implements Response.List
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        highscores = new Highscores();
+        highscores = new Highscores(); // Create new highscore object
 
         questionCategory = findViewById(R.id.questionCategory);
         questionDifficulty = findViewById(R.id.questionDifficulty);
         questionQuestion = findViewById(R.id.questionQuestion);
         questionCounter = findViewById(R.id.questionCounter);
-        answer = findViewById(R.id.answer);
 
-        QuestionsRequest request = new QuestionsRequest(this);
+        QuestionsRequest request = new QuestionsRequest(this); // Make request for the questions
         request.getQuestion(this);
     }
 
+    // Process the first question
     public void gotQuestion(final ArrayList<Question> questions) {
         trivia = new Trivia(questions);
         sizing = "1/"+String.valueOf(trivia.size);
@@ -65,6 +66,7 @@ public class QuestionActivity extends AppCompatActivity implements Response.List
 
     }
 
+    // Check if answer was correct and update score accordingly
     public void updateScore (View view, int nr) {
         tvHighscore = findViewById(R.id.questionHighscore);
         String answer = questionsArray.get(nr).getCorrect();
@@ -95,6 +97,7 @@ public class QuestionActivity extends AppCompatActivity implements Response.List
         String highscore = "Your score is: " + highscores.getHighscore();
         tvHighscore.setText(highscore);
 
+        // Go to new activity when 10 questions are answered
         if (highscores.getCorrect() + highscores.getIncorrect() == 10) {
             Log.d("answered", "10");
             score = highscores.getHighscore();
@@ -104,13 +107,14 @@ public class QuestionActivity extends AppCompatActivity implements Response.List
         }
     }
 
+    // Updates the score and shows the next question
     public boolean nextQuestion(View view) {
         int nr = trivia.nextQuestion();
 
         Log.d("qnr", String.valueOf(nr));
 
         updateScore(view, nr);
-        trivia.updateAnswered(); // +1 to nr of answered questions, now 1 too high
+        trivia.updateAnswered(); // +1 to nr of answered questions
         nr = trivia.nextQuestion();
 
         questionCategory.setText(questionsArray.get(nr).getCategory());
@@ -127,6 +131,7 @@ public class QuestionActivity extends AppCompatActivity implements Response.List
 
     }
 
+    // Post the score to the database when all questions are answered
     public void post() {
         String url = "http://ide50-davidarisz.cs50.io:8080/list";
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());

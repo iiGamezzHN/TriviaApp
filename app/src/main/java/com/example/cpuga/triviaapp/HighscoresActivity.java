@@ -28,6 +28,7 @@ public class HighscoresActivity extends AppCompatActivity implements HighscoreRe
     }
 
     public void gotHighscore(ArrayList arrayList) {
+        // Simple adapter to show highscores
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 android.R.id.text1, arrayList);

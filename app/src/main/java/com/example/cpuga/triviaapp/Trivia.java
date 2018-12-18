@@ -14,11 +14,12 @@ public class Trivia implements Serializable {
         size = qArray.size();
     }
 
+    // Returns true if everything is answered
     public boolean allAnswered() {
-        Log.d("asdfff", nr_answered + " " + qArray.size());
         return nr_answered >= qArray.size()-1;
     }
 
+    // Return nr of answered questions
     public Integer nextQuestion() {
         if (allAnswered()) {
             return 9;
@@ -27,6 +28,7 @@ public class Trivia implements Serializable {
         }
     }
 
+    // Updates nr_answered questions
     public void updateAnswered () {
         nr_answered += 1;
     }

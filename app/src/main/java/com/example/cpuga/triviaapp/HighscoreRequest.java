@@ -50,7 +50,7 @@ public class HighscoreRequest implements Response.Listener<JSONArray>, Response.
         ArrayList<String> arrayList = new ArrayList();
 
         try {
-            for (int i = 0; i < response.length(); i++) {
+            for (int i = 0; i < response.length(); i++) { // Loop though scores
                 JSONObject object = response.getJSONObject(i);
                 String name = object.getString("name");
                 String score = object.getString("score");

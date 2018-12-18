@@ -15,6 +15,7 @@ public class Highscores implements Serializable {
         incorrect = 0;
     }
 
+    // Getters and setters
     public void updateCorrect() {
         correct += 1;
     }
@@ -33,12 +34,6 @@ public class Highscores implements Serializable {
 
     public void updateScore () {
         score += 1;
-//        if (i >= 9) {
-//            Log.d("lala", "lala");
-//        } else {
-//            score += 1;
-//        }
-
     }
 
     public int getHighscore () {

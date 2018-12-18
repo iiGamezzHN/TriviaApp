@@ -15,6 +15,7 @@ public class Question implements Serializable {
         this.incorrect = incorrect;
     }
 
+    // Getters and setters
     public String getCategory() {
         return category;
     }
